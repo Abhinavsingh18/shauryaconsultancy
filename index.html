@@ -36,10 +36,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#contact">Contact</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="createStudentItem">
                         <a class="nav-link" href="createstudent.html">Create Student</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" id="studentListItem">
                         <a class="nav-link" href="studentlist.html">Student List</a>
                     </li>
                     <li class="nav-item">
@@ -232,13 +232,19 @@
             const consultantLoginLink = document.getElementById('consultantLoginLink');
             const logoutItem = document.getElementById('logoutItem');
             const logoutLink = document.getElementById('logoutLink');
+            const createStudentItem = document.getElementById('createStudentItem');
+            const studentListItem = document.getElementById('studentListItem');
 
             if (username) {
                 consultantLoginLink.textContent = `Hi ${username}`;
                 consultantLoginLink.href = '#';
                 logoutItem.style.display = 'block';
+                createStudentItem.style.display = 'block';
+                studentListItem.style.display = 'block';
             } else {
                 logoutItem.style.display = 'none';
+                createStudentItem.style.display = 'none';
+                studentListItem.style.display = 'none';
             }
 
             logoutLink.addEventListener('click', () => {
@@ -246,6 +252,8 @@
                 consultantLoginLink.textContent = 'Consultant Login';
                 consultantLoginLink.href = 'login.html';
                 logoutItem.style.display = 'none';
+                createStudentItem.style.display = 'none';
+                studentListItem.style.display = 'none';
             });
         });
     </script>
