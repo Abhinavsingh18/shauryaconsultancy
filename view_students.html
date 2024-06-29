@@ -10,8 +10,16 @@
 
 <div class="container">
     <h1>Student Management</h1>
-    <a href="https://rssmarthut.com/consultant/view_students.php" class="btn btn-primary">View Students</a>
+    <a id="view-students-btn" href="#" class="btn btn-primary">View Students</a>
 </div>
+
+<script>
+    // Retrieve username from local storage
+    const username = localStorage.getItem('username');
+
+    // Set the href attribute of the "View Students" button
+    document.getElementById('view-students-btn').href = 'https://rssmarthut.com/consultant/view_students.php?username=' + encodeURIComponent(username);
+</script>
 
 </body>
 </html>
