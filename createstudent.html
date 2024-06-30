@@ -79,20 +79,41 @@
                         <input type="email" class="form-control" name="email" id="email" placeholder="Enter email" required>
                     </div>
                     <div class="form-group">
-                        <label for="feesAmount">Fees Amount</label>
-                        <input type="number" class="form-control" name="feesAmount" id="feesAmount" placeholder="Enter fees amount" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="consultantName">Consultant Name</label>
+                        <label for="consultantName">Consultant Name / University Name</label>
                         <input type="text" class="form-control" name="consultantName" id="consultantName" placeholder="Enter consultant name" required>
                     </div>
+                    <div class="form-group">
+                        <label for="feesAmount">Course Fees Amount</label>
+                        <input type="number" class="form-control" name="feesAmount" id="feesAmount" placeholder="Enter fees amount" required>
+                    </div>
+                    
                     <div class="form-group">
                         <label for="consultantAmount">Consultant Amount</label>
                         <input type="number" class="form-control" name="consultantAmount" id="consultantAmount" placeholder="Enter consultant amount" required>
                     </div>
                     <div class="form-group">
-                        <label for="amount">Amount</label>
-                        <input type="number" class="form-control" name="amount" id="amount" placeholder="Enter amount" required>
+                        <label for="total-amount">Total Amount</label>
+                        <input type="number" class="form-control" name="total-amount" id="total-amount" placeholder="Enter amount" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paid-amount-university">Paid Amount To University</label>
+                        <input type="number" class="form-control" name="paid-amount-university" id="paid-amount-university" placeholder="Enter amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paid-amount-consultant">Paid Amount To Consultant</label>
+                        <input type="number" class="form-control" name="paid-amount-consultant" id="paid-amount-consultant" placeholder="Enter amount" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="paid-amount">Total Paid Amount</label>
+                        <input type="number" class="form-control" name="paid-amount" id="paid-amount" placeholder="Enter amount" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="remaining-amount">Remaining Amount</label>
+                        <input type="number" class="form-control" name="remaining-amount" id="remaining-amount" placeholder="Enter amount" readonly required>
+                    </div>
+                    <div class="form-group">
+                        <label for="remark">Remark</label>
+                        <input type="text" class="form-control" name="remark" id="remark" placeholder="Enter remark" required>
                     </div>
                     <div class="form-group">
                         <label for="username" hidden>Username</label>
@@ -106,7 +127,7 @@
 </div>
 
 <!-- Bootstrap and jQuery -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
@@ -125,6 +146,38 @@
         var usernameField = document.getElementById('username');
         localStorage.setItem('username', usernameField.value);
     });
+
+    // Calculate total amount
+    function calculateTotalAmount() {
+        var feesAmount = parseFloat(document.getElementById('feesAmount').value) || 0;
+        var consultantAmount = parseFloat(document.getElementById('consultantAmount').value) || 0;
+        var totalAmount = feesAmount + consultantAmount;
+        document.getElementById('total-amount').value = totalAmount;
+        calculateRemainingAmount(); // Recalculate remaining amount whenever total amount is calculated
+    }
+
+    // Calculate total paid amount
+    function calculateTotalPaidAmount() {
+        var paidAmountUniversity = parseFloat(document.getElementById('paid-amount-university').value) || 0;
+        var paidAmountConsultant = parseFloat(document.getElementById('paid-amount-consultant').value) || 0;
+        var totalPaidAmount = paidAmountUniversity + paidAmountConsultant;
+        document.getElementById('paid-amount').value = totalPaidAmount;
+        calculateRemainingAmount(); // Recalculate remaining amount whenever paid amount is calculated
+    }
+
+    // Calculate remaining amount
+    function calculateRemainingAmount() {
+        var totalAmount = parseFloat(document.getElementById('total-amount').value) || 0;
+        var paidAmount = parseFloat(document.getElementById('paid-amount').value) || 0;
+        var remainingAmount = totalAmount - paidAmount;
+        document.getElementById('remaining-amount').value = remainingAmount;
+    }
+
+    // Add event listeners to recalculate amounts when inputs change
+    document.getElementById('feesAmount').addEventListener('input', calculateTotalAmount);
+    document.getElementById('consultantAmount').addEventListener('input', calculateTotalAmount);
+    document.getElementById('paid-amount-university').addEventListener('input', calculateTotalPaidAmount);
+    document.getElementById('paid-amount-consultant').addEventListener('input', calculateTotalPaidAmount);
 </script>
 
 </body>
